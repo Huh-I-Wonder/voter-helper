@@ -2,30 +2,82 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>候補者マッチングプロンプト生成</title>
   <style>
-    body { font-family: sans-serif; padding: 2em; background: #f7f7ff; }
-    h1 { color: #333366; }
-    textarea { width: 100%; height: 180px; }
-    input, select, button { margin: 0.5em 0; padding: 0.5em; width: 100%; }
+    body {
+      font-family: 'Yu Gothic UI', sans-serif;
+      background: #f2f4fc;
+      color: #333;
+      padding: 2em;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.6em;
+      color: #2b3674;
+      margin-bottom: 1em;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1.5em;
+      margin-bottom: 0.3em;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 0.5em;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #5865f2;
+      color: white;
+      border: none;
+      margin-top: 1.5em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #4752c4;
+    }
+    textarea {
+      height: 150px;
+    }
+    .output-area {
+      margin-top: 2em;
+      background: #fff;
+      border: 1px dashed #999;
+      padding: 1em;
+      border-radius: 0.5em;
+    }
+    .output-area h2 {
+      margin-top: 0;
+      font-size: 1.2em;
+      color: #444;
+    }
   </style>
 </head>
 <body>
-  <h1>🗳️ あなたに合う候補者をChatGPTで探すプロンプト作成</h1>
+  <h1>📄 あなたに合う候補者をChatGPTで探すプロンプト生成</h1>
 
-  <label>あなたの選挙区（都道府県）</label>
+  <label for="region">あなたの選挙区（都道府県）</label>
   <input type="text" id="region" placeholder="例：神奈川県">
 
-  <label>あなたの政治的な考え（自由に）</label>
-  <textarea id="opinion" placeholder="例：減税希望、夫婦別姓に否定的、移民制限、反中国 など"></textarea>
+  <label for="opinion">あなたの政治的な考え方</label>
+  <textarea id="opinion" placeholder="例：減税希望、婚姻名別性に否定的、移民制限、反中国 など"></textarea>
 
-  <label>除外したい政党や勢力（カンマ区切り）</label>
-  <input type="text" id="exclude" placeholder="例：自民、立憲、共産党">
+  <label for="exclude">除外したい政党や勢力（カンマ区切り）</label>
+  <input type="text" id="exclude" placeholder="例：自治、立懿、共産党">
 
   <button onclick="generatePrompt()">プロンプト生成</button>
 
-  <h2>👇 ChatGPTにコピペするプロンプト</h2>
-  <textarea id="output" readonly></textarea>
+  <div class="output-area">
+    <h2>🔻 ChatGPTにコピペするプロンプト</h2>
+    <textarea id="output" readonly></textarea>
+  </div>
 
   <script>
     function generatePrompt() {
@@ -38,10 +90,10 @@
 
 ${opinion}
 
-上記を踏まえて、次の参議院選挙で私の考えに合う候補者を教えてください。
+以上をふまえて、次の参議院選挙で私の考えに合う候補者を教えてください。
 以下の政党は除外してください：${exclude}。
 
-なお、農政・経済・安全保障に関する観点を特に重視します。`;
+農政、経済、安全保障の89観点を重視します。`;
 
       document.getElementById('output').value = prompt;
     }
