@@ -277,46 +277,35 @@
     }
   </script>
 
-  <script>
-    function generatePrompt() {
-      const region = document.getElementById('region').value;
-      const tone = document.getElementById('custom-tone').value;
-      const stanceCards = Array.from(document.querySelectorAll('.accordion-content .selected')).map(el => el.textContent);
-      const stanceFree = document.getElementById('stance-free').value.trim();
+<script>
+  function generatePrompt() {
+    const region = document.getElementById('region').value;
+    const tone = document.getElementById('custom-tone').value;
+    const stanceCards = Array.from(document.querySelectorAll('.accordion-content .selected')).map(el => el.textContent);
+    const stanceFree = document.getElementById('stance-free').value.trim();
 
-      let prompt = "";
-      if (tone === "strong") {
-        prompt += `あなたは政治アドバイザーです。以下の希望に極力沿う候補者を${region}選挙区および比例代表から厳選してください。
-`;
-      } else if (tone === "ranked") {
-        prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から候補順にランク付けして提示してください。
-`;
-      } else if (tone === "explain") {
-        prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から探し、候補者ごとに理由を詳しく説明してください。
-`;
-      } else {
-              }
-
-            if (stanceCards.length > 0) {
-        prompt += `重視する政策スタンス（以下すべてを重視しています）：
-- ${stanceCards.join('
-- ')}
-`;
-      }
-      if (stanceFree) {
-        prompt += `重視する政策スタンス（自由記述）：${stanceFree}。
-`;
-      }
-      prompt += `以下の情報を含めて提示してください：
-- 候補者の氏名
-- 所属政党
-- 上記のスタンスとの一致度
-- 判断の根拠や実績（可能であれば）
-- 推奨理由（簡潔に）`;
-
-      document.getElementById('prompt-text').value = prompt;
+    let prompt = "";
+    if (tone === "strong") {
+      prompt += `あなたは政治アドバイザーです。以下の希望に極力沿う候補者を${region}選挙区および比例代表から厳選してください。\n`;
+    } else if (tone === "ranked") {
+      prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から候補順にランク付けして提示してください。\n`;
+    } else if (tone === "explain") {
+      prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から探し、候補者ごとに理由を詳しく説明してください。\n`;
+    } else {
+      prompt += `以下の条件に基づき、${region}選挙区および比例代表から候補者を提案してください。\n`;
     }
-  </script>
+
+    if (stanceCards.length > 0) {
+      prompt += `重視する政策スタンス（以下すべてを重視しています）：\n- ${stanceCards.join('\n- ')}\n`;
+    }
+    if (stanceFree) {
+      prompt += `重視する政策スタンス（自由記述）：${stanceFree}。\n`;
+    }
+    prompt += `以下の情報を含めて提示してください：\n- 候補者の氏名\n- 所属政党\n- 上記のスタンスとの一致度\n- 判断の根拠や実績（可能であれば）\n- 推奨理由（簡潔に）`;
+
+    document.getElementById('prompt-text').value = prompt;
+  }
+</script>
 
   <script>
     function toggleAccordion(id) {
