@@ -258,6 +258,7 @@
   <div class="output-area" id="output">
     <h2>📝 生成されたプロンプト</h2>
     <textarea readonly id="prompt-text"></textarea>
+    <button id="copy-button" onclick="copyPrompt(this)">📋 プロンプトをコピーする</button>
   </div>
 
   <script>
@@ -301,6 +302,19 @@
       prompt += `候補者名と簡単な理由も一緒に提示してください。`;
 
       document.getElementById('prompt-text').value = prompt;
+    }
+      function copyPrompt(button) {
+      const text = document.getElementById("prompt-text").value;
+      navigator.clipboard.writeText(text).then(() => {
+        button.textContent = "✅ コピー成功！";
+        button.style.backgroundColor = "#4caf50";
+        setTimeout(() => {
+          button.textContent = "📋 プロンプトをコピーする";
+          button.style.backgroundColor = "#5865f2";
+        }, 2000);
+      }).catch(() => {
+        alert("コピーに失敗しました。手動で選択してください。");
+      });
     }
   </script>
 </body>
