@@ -67,7 +67,7 @@
   <input type="text" id="region" placeholder="例：神奈川県">
 
   <label for="opinion">あなたの政治的な考え方</label>
-  <textarea id="opinion" placeholder="例：減税希望、夫婦別姓に否定的、移民制限、反中国 など"></textarea>
+  <textarea id="opinion" placeholder="例：教育の充実、持続可能なエネルギー政策、食料安全保障、子育て支援の強化 など"></textarea>
 
   <label for="preferredParties">支持してもいい政党（任意・カンマ区切り）</label>
   <input type="text" id="preferredParties" placeholder="例：国民民主、参政党">
@@ -97,7 +97,8 @@ ${opinion}
 比例代表では以下の政党を支持する傾向があります：${preferred || '（特になし）'}
 以下の政党は支持対象外としています：${exclude || '（特になし）'}
 
-以上を踏まえて、選挙区・比例の両方において、私の考えに合いそうな候補者を教えてください。;
+以上を踏まえて、選挙区・比例の両方において、私の考えに合いそうな候補者を教えてください。
+`;
 
       document.getElementById('output').value = prompt;
     }
