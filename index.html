@@ -61,21 +61,24 @@
   </style>
 </head>
 <body>
-  <h1>📄 あなたに合う候補者をChatGPTで探すプロンプト生成</h1>
+  <h1>🗳️ あなたに合う候補者をChatGPTで探すプロンプト作成</h1>
 
   <label for="region">あなたの選挙区（都道府県）</label>
   <input type="text" id="region" placeholder="例：神奈川県">
 
   <label for="opinion">あなたの政治的な考え方</label>
-  <textarea id="opinion" placeholder="例：減税希望、婚姻名別性に否定的、移民制限、反中国 など"></textarea>
+  <textarea id="opinion" placeholder="例：減税希望、夫婦別姓に否定的、移民制限、反中国 など"></textarea>
+
+  <label for="preferredParties">支持してもいい政党（任意・カンマ区切り）</label>
+  <input type="text" id="preferredParties" placeholder="例：国民民主、参政党">
 
   <label for="exclude">除外したい政党や勢力（カンマ区切り）</label>
-  <input type="text" id="exclude" placeholder="例：自治、立懿、共産党">
+  <input type="text" id="exclude" placeholder="例：自民、立憲、共産党">
 
   <button onclick="generatePrompt()">プロンプト生成</button>
 
   <div class="output-area">
-    <h2>🔻 ChatGPTにコピペするプロンプト</h2>
+    <h2>🔽 ChatGPTにコピペするプロンプト</h2>
     <textarea id="output" readonly></textarea>
   </div>
 
@@ -83,17 +86,18 @@
     function generatePrompt() {
       const region = document.getElementById('region').value.trim();
       const opinion = document.getElementById('opinion').value.trim();
+      const preferred = document.getElementById('preferredParties').value.trim();
       const exclude = document.getElementById('exclude').value.trim();
 
       const prompt = 
-`私は${region}に住んでいます。以下のような政治的な考え方を持っています：
-
+`私は${region}に住んでいます。
+以下のような政治的な考え方を持っています：
 ${opinion}
 
-以上をふまえて、次の参議院選挙で私の考えに合う候補者を教えてください。
-以下の政党は除外してください：${exclude}。
+比例代表では以下の政党を支持する傾向があります：${preferred || '（特になし）'}
+以下の政党は支持対象外としています：${exclude || '（特になし）'}
 
-農政、経済、安全保障の89観点を重視します。`;
+以上を踏まえて、選挙区・比例の両方において、私の考えに合いそうな候補者を教えてください。;
 
       document.getElementById('output').value = prompt;
     }
