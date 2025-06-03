@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>候補者マッチングプロンプト生成</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f7f7ff; }
+    h1 { color: #333366; }
+    textarea { width: 100%; height: 180px; }
+    input, select, button { margin: 0.5em 0; padding: 0.5em; width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>🗳️ あなたに合う候補者をChatGPTで探すプロンプト作成</h1>
+
+  <label>あなたの選挙区（都道府県）</label>
+  <input type="text" id="region" placeholder="例：神奈川県">
+
+  <label>あなたの政治的な考え（自由に）</label>
+  <textarea id="opinion" placeholder="例：減税希望、夫婦別姓に否定的、移民制限、反中国 など"></textarea>
+
+  <label>除外したい政党や勢力（カンマ区切り）</label>
+  <input type="text" id="exclude" placeholder="例：自民、立憲、共産党">
+
+  <button onclick="generatePrompt()">プロンプト生成</button>
+
+  <h2>👇 ChatGPTにコピペするプロンプト</h2>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    function generatePrompt() {
+      const region = document.getElementById('region').value.trim();
+      const opinion = document.getElementById('opinion').value.trim();
+      const exclude = document.getElementById('exclude').value.trim();
+
+      const prompt = 
+`私は${region}に住んでいます。以下のような政治的な考え方を持っています：
+
+${opinion}
+
+上記を踏まえて、次の参議院選挙で私の考えに合う候補者を教えてください。
+以下の政党は除外してください：${exclude}。
+
+なお、農政・経済・安全保障に関する観点を特に重視します。`;
+
+      document.getElementById('output').value = prompt;
+    }
+  </script>
+</body>
+</html>
