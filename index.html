@@ -24,6 +24,11 @@
       margin-top: 1.5em;
       margin-bottom: 0.3em;
     }
+    h3 {
+      margin-top: 1.5em;
+      cursor: pointer;
+      user-select: none;
+    }
     input, select, textarea, button {
       width: 100%;
       padding: 0.8em;
@@ -62,7 +67,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1em;
-      margin-top: 1em;
+      margin-top: 0.5em;
     }
     .card {
       background: white;
@@ -70,7 +75,7 @@
       border-radius: 0.5em;
       padding: 1em;
       cursor: pointer;
-      flex: 1 1 calc(33% - 1em);
+      flex: 1 1 calc(50% - 1em);
       transition: border-color 0.2s;
       box-sizing: border-box;
       text-align: center;
@@ -81,6 +86,13 @@
     .card.selected {
       border-color: #5865f2;
       background-color: #e7e9ff;
+    }
+    .accordion-content {
+      display: none;
+    }
+    .accordion-content.active {
+      display: flex;
+      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -140,46 +152,105 @@
   </select>
 
   <label>あなたの政治的なスタンスを選んでください（複数選択可）</label>
-  <div class="card-container" id="stance-cards">
+
+  
+  <h3 onclick="toggleAccordion('eco')">📊 経済政策 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="eco">
     <div class="card">減税に賛成</div>
-    <div class="card">移民に反対</div>
-    <div class="card">夫婦別姓に慎重</div>
-    <div class="card">防衛力強化</div>
+    <div class="card">経済成長優先</div>
+    <div class="card">財政再建重視</div>
     <div class="card">公共投資拡大</div>
-    <div class="card">農業支援強化</div>
-    <div class="card">金融緩和維持</div>
-    <div class="card">教育改革</div>
   </div>
+
+  
+  <h3 onclick="toggleAccordion('welfare')">🧑‍🍼 社会・福祉 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="welfare">
+    <div class="card">生活保護の拡充</div>
+    <div class="card">出産・子育て支援を拡充</div>
+    <div class="card">年金制度の改革</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('edu')">🏫 教育・労働 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="edu">
+    <div class="card">教育改革</div>
+    <div class="card">教育費の無償化</div>
+    <div class="card">同一労働同一賃金に賛成</div>
+    <div class="card">最低賃金の引上げ</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('security')">🛡️ 安全保障・外交 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="security">
+    <div class="card">防衛力強化</div>
+    <div class="card">憲法改正に賛成</div>
+    <div class="card">対中強硬路線</div>
+    <div class="card">多国間協調主義</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('env')">🌏 環境・エネルギー <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="env">
+    <div class="card">温暖化対策推進</div>
+    <div class="card">原発再稼働に賛成</div>
+    <div class="card">再生可能エネルギー推進</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('rights')">🏛️ 社会制度・人権 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="rights">
+    <div class="card">同性婚合法化に賛成</div>
+    <div class="card">夫婦別姓に慎重</div>
+    <div class="card">LGBT理解増進法に賛成</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('local')">🌾 地方・農業・技術 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="local">
+    <div class="card">農業支援強化</div>
+    <div class="card">地方交付税の見直し</div>
+    <div class="card">IT教育の強化</div>
+    <div class="card">AI・半導体への投資</div>
+  </div>
+
+  
+  <h3 onclick="toggleAccordion('immigration')">🌍 移民・国籍 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
+  <div class="card-container accordion-content" id="immigration">
+    <div class="card">移民に反対</div>
+    <div class="card">外国人労働者の受け入れ拡大に反対</div>
+  </div>
+
+  <label for="stance-free">その他のスタンス（自由入力）</label>
+  <textarea id="stance-free" placeholder="自由記述：例）外国人労働者の制限を強化すべき、等"></textarea>
 
   <label>支持してもよい政党（複数選択可）</label>
   <div class="card-container" id="include-parties">
-  <div class="card">自由民主党（自民党）</div>
-  <div class="card">立憲民主党（立憲）</div>
-  <div class="card">日本維新の会</div>
-  <div class="card">公明党</div>
-  <div class="card">国民民主党（国民）</div>
-  <div class="card">日本共産党（共産）</div>
-  <div class="card">れいわ新選組</div>
-  <div class="card">参政党</div>
-  <div class="card">社会民主党（社民）</div>
-  <div class="card">日本保守党</div>
-  <div class="card">無所属</div>
-</div>
+    <div class="card">自由民主党（自民党）</div>
+    <div class="card">立憲民主党（立憲）</div>
+    <div class="card">日本維新の会</div>
+    <div class="card">公明党</div>
+    <div class="card">国民民主党（国民）</div>
+    <div class="card">日本共産党（共産）</div>
+    <div class="card">れいわ新選組</div>
+    <div class="card">参政党</div>
+    <div class="card">社会民主党（社民）</div>
+    <div class="card">日本保守党</div>
+    <div class="card">無所属</div>
+  </div>
 
   <label>除外したい政党（複数選択可）</label>
   <div class="card-container" id="exclude-parties">
-  <div class="card">自由民主党（自民党）</div>
-  <div class="card">立憲民主党（立憲）</div>
-  <div class="card">日本維新の会</div>
-  <div class="card">公明党</div>
-  <div class="card">国民民主党（国民）</div>
-  <div class="card">日本共産党（共産）</div>
-  <div class="card">れいわ新選組</div>
-  <div class="card">参政党</div>
-  <div class="card">社会民主党（社民）</div>
-  <div class="card">日本保守党</div>
-  <div class="card">無所属</div>
-</div>
+    <div class="card">自由民主党（自民党）</div>
+    <div class="card">立憲民主党（立憲）</div>
+    <div class="card">日本維新の会</div>
+    <div class="card">公明党</div>
+    <div class="card">国民民主党（国民）</div>
+    <div class="card">日本共産党（共産）</div>
+    <div class="card">れいわ新選組</div>
+    <div class="card">参政党</div>
+    <div class="card">社会民主党（社民）</div>
+    <div class="card">日本保守党</div>
+    <div class="card">無所属</div>
   </div>
 
   <button onclick="generatePrompt()">プロンプトを生成する</button>
@@ -196,9 +267,15 @@
       });
     });
 
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('active');
+    }
+
     function generatePrompt() {
       const region = document.getElementById('region').value;
-      const stances = Array.from(document.querySelectorAll('#stance-cards .selected')).map(el => el.textContent);
+      const stanceCards = Array.from(document.querySelectorAll('.accordion-content .selected')).map(el => el.textContent);
+      const stanceFree = document.getElementById('stance-free').value.trim();
       const includeParties = Array.from(document.querySelectorAll('#include-parties .selected')).map(el => el.textContent);
       const excludeParties = Array.from(document.querySelectorAll('#exclude-parties .selected')).map(el => el.textContent);
 
@@ -209,8 +286,11 @@
       }
 
       let prompt = `以下の条件に合致する候補者を、${region}選挙区および比例代表から探してください。\n`;
-      if (stances.length > 0) {
-        prompt += `重視する政策スタンスは：${stances.join('、')}。\n`;
+      if (stanceCards.length > 0) {
+        prompt += `重視する政策スタンス（選択）：${stanceCards.join('、')}。\n`;
+      }
+      if (stanceFree) {
+        prompt += `重視する政策スタンス（自由記述）：${stanceFree}。\n`;
       }
       if (includeParties.length > 0) {
         prompt += `支持してもよい政党：${includeParties.join('、')}。\n`;
