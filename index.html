@@ -58,6 +58,30 @@
       font-size: 1.2em;
       color: #444;
     }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin-top: 1em;
+    }
+    .card {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0.5em;
+      padding: 1em;
+      cursor: pointer;
+      flex: 1 1 calc(33% - 1em);
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .card:hover {
+      border-color: #5865f2;
+    }
+    .card.selected {
+      border-color: #5865f2;
+      background-color: #e7e9ff;
+    }
   </style>
 </head>
 <body>
@@ -115,72 +139,88 @@
     <option value="沖縄県">沖縄県</option>
   </select>
 
-  <label for="opinion">あなたの政治的な考え方</label>
-  <textarea id="opinion" placeholder="例：教育の充実、持続可能なエネルギー政策、食料安全保障、子育て支援の強化 など"></textarea>
+  <label>あなたの政治的なスタンスを選んでください（複数選択可）</label>
+  <div class="card-container" id="stance-cards">
+    <div class="card">減税に賛成</div>
+    <div class="card">移民に反対</div>
+    <div class="card">夫婦別姓に慎重</div>
+    <div class="card">防衛力強化</div>
+    <div class="card">公共投資拡大</div>
+    <div class="card">農業支援強化</div>
+    <div class="card">金融緩和維持</div>
+    <div class="card">教育改革</div>
+  </div>
 
-  <label for="preferredParty">支持してもいい政党</label>
-  <select id="preferredParty">
-    <option value="">（選択なし）</option>
-    <option value="自由民主党">自由民主党</option>
-    <option value="立憲民主党">立憲民主党</option>
-    <option value="日本維新の会">日本維新の会</option>
-    <option value="公明党">公明党</option>
-    <option value="国民民主党">国民民主党</option>
-    <option value="日本共産党">日本共産党</option>
-    <option value="れいわ新選組">れいわ新選組</option>
-    <option value="参政党">参政党</option>
-    <option value="社会民主党">社会民主党</option>
-    <option value="日本保守党">日本保守党</option>
-    <option value="無所属">無所属</option>
-  </select>
+  <label>支持してもよい政党（複数選択可）</label>
+  <div class="card-container" id="include-parties">
+  <div class="card">自由民主党（自民党）</div>
+  <div class="card">立憲民主党（立憲）</div>
+  <div class="card">日本維新の会</div>
+  <div class="card">公明党</div>
+  <div class="card">国民民主党（国民）</div>
+  <div class="card">日本共産党（共産）</div>
+  <div class="card">れいわ新選組</div>
+  <div class="card">参政党</div>
+  <div class="card">社会民主党（社民）</div>
+  <div class="card">日本保守党</div>
+  <div class="card">無所属</div>
+</div>
 
-  <label for="excludeParty">除外したい政党や勢力</label>
-  <select id="excludeParty">
-    <option value="">（選択なし）</option>
-    <option value="自由民主党">自由民主党</option>
-    <option value="立憲民主党">立憲民主党</option>
-    <option value="日本維新の会">日本維新の会</option>
-    <option value="公明党">公明党</option>
-    <option value="国民民主党">国民民主党</option>
-    <option value="日本共産党">日本共産党</option>
-    <option value="れいわ新選組">れいわ新選組</option>
-    <option value="参政党">参政党</option>
-    <option value="社会民主党">社会民主党</option>
-    <option value="日本保守党">日本保守党</option>
-    <option value="無所属">無所属</option>
-  </select>
+  <label>除外したい政党（複数選択可）</label>
+  <div class="card-container" id="exclude-parties">
+  <div class="card">自由民主党（自民党）</div>
+  <div class="card">立憲民主党（立憲）</div>
+  <div class="card">日本維新の会</div>
+  <div class="card">公明党</div>
+  <div class="card">国民民主党（国民）</div>
+  <div class="card">日本共産党（共産）</div>
+  <div class="card">れいわ新選組</div>
+  <div class="card">参政党</div>
+  <div class="card">社会民主党（社民）</div>
+  <div class="card">日本保守党</div>
+  <div class="card">無所属</div>
+</div>
+  </div>
 
-  <button onclick="generatePrompt()">プロンプト生成</button>
+  <button onclick="generatePrompt()">プロンプトを生成する</button>
 
-  <div class="output-area">
-    <h2>🔽 ChatGPTにコピペするプロンプト</h2>
-    <textarea id="output" readonly></textarea>
+  <div class="output-area" id="output">
+    <h2>📝 生成されたプロンプト</h2>
+    <textarea readonly id="prompt-text"></textarea>
   </div>
 
   <script>
-    function generatePrompt() {
-      const region = document.getElementById('region').value.trim();
-      const opinion = document.getElementById('opinion').value.trim();
-      const preferred = document.getElementById('preferredParty').value;
-      const exclude = document.getElementById('excludeParty').value;
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('selected');
+      });
+    });
 
-      let conflictWarning = '';
-      if (preferred && exclude && preferred === exclude) {
-        conflictWarning = '\n※注意：支持政党と除外政党が重複しています。どちらかを修正してください。';
+    function generatePrompt() {
+      const region = document.getElementById('region').value;
+      const stances = Array.from(document.querySelectorAll('#stance-cards .selected')).map(el => el.textContent);
+      const includeParties = Array.from(document.querySelectorAll('#include-parties .selected')).map(el => el.textContent);
+      const excludeParties = Array.from(document.querySelectorAll('#exclude-parties .selected')).map(el => el.textContent);
+
+      let conflict = includeParties.some(party => excludeParties.includes(party));
+      if (conflict) {
+        alert("同じ政党が支持・除外の両方に含まれています。確認してください。");
+        return;
       }
 
-      const prompt = 
-`私は${region}に住んでいます。
-以下のような政治的な考え方を持っています：
-${opinion}
+      let prompt = `以下の条件に合致する候補者を、${region}選挙区および比例代表から探してください。\n`;
+      if (stances.length > 0) {
+        prompt += `重視する政策スタンスは：${stances.join('、')}。\n`;
+      }
+      if (includeParties.length > 0) {
+        prompt += `支持してもよい政党：${includeParties.join('、')}。\n`;
+      }
+      if (excludeParties.length > 0) {
+        prompt += `除外したい政党：${excludeParties.join('、')}。\n`;
+      }
+      prompt += `候補者名と簡単な理由も一緒に提示してください。`;
 
-比例代表では、私の思想に合致する政党を挙げてください。
-以下の政党は支持しても良いと考えています：${preferred || '（特になし）'}
-以下の政党は除外対象です：${exclude || '（特になし）'}${conflictWarning}
-
-これを踏まえて、選挙区・比例の両方において、私の考えに合いそうな候補者や政党を教えてください。`;
-
-      document.getElementById('output').value = prompt;
+      document.getElementById('prompt-text').value = prompt;
     }
   </script>
 </body>
