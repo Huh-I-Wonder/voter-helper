@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <!-- Ver1.0 / 最終更新: 2025-06-03 / 注意文追加 -->
+  <!-- Ver1.1 / 重視テーマ1個＋その他複数選択方式に変更 -->
 
 <head>
   <meta charset="UTF-8">
@@ -26,12 +26,7 @@
       margin-top: 1.5em;
       margin-bottom: 0.3em;
     }
-    h3 {
-      margin-top: 1.5em;
-      cursor: pointer;
-      user-select: none;
-    }
-    input, select, textarea, button {
+    select, textarea, button {
       width: 100%;
       padding: 0.8em;
       border: 1px solid #ccc;
@@ -64,37 +59,6 @@
       margin-top: 0;
       font-size: 1.2em;
       color: #444;
-    }
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-      margin-top: 0.5em;
-    }
-    .card {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 0.5em;
-      padding: 1em;
-      cursor: pointer;
-      flex: 1 1 calc(50% - 1em);
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    .card:hover {
-      border-color: #5865f2;
-    }
-    .card.selected {
-      border-color: #5865f2;
-      background-color: #e7e9ff;
-    }
-    .accordion-content {
-      display: none;
-    }
-    .accordion-content.active {
-      display: flex;
-      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -153,99 +117,28 @@
     <option value="沖縄県">沖縄県</option>
   </select>
 
-  <label>あなたの政治的なスタンスを選んでください（複数選択可）</label>
-
-  
-
-  <h3 onclick="toggleAccordion('eco')">📊 経済政策 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="eco">
-    <div class="card">減税に賛成</div>
-    <div class="card">経済成長優先</div>
-    <div class="card">財政再建重視</div>
-    <div class="card">公共投資拡大</div>
-    <div class="card">中小企業支援</div>
-    <div class="card">インフレ対策重視</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('welfare')">🧑‍🍼 社会・福祉 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="welfare">
-    <div class="card">生活保護の拡充</div>
-    <div class="card">出産・子育て支援を拡充</div>
-    <div class="card">年金制度の改革</div>
-    <div class="card">介護制度の充実</div>
-    <div class="card">障害者支援の強化</div>
-    <div class="card">ひとり親家庭の支援</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('edu')">📚 教育・人材育成 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="edu">
-    <div class="card">教育の無償化</div>
-    <div class="card">教員の待遇改善</div>
-    <div class="card">教育カリキュラムの見直し</div>
-    <div class="card">ICT教育の推進</div>
-    <div class="card">高等教育支援の拡充</div>
-    <div class="card">奨学金制度の改善</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('env')">🌱 環境・エネルギー <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="env">
-    <div class="card">温暖化対策推進</div>
-    <div class="card">原発再稼働に賛成</div>
-    <div class="card">再生可能エネルギー推進</div>
-    <div class="card">環境税の導入に賛成</div>
-    <div class="card">省エネ技術への投資</div>
-    <div class="card">脱炭素社会の実現</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('imm')">🌍 移民・国籍 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="imm">
-    <div class="card">移民に反対</div>
-    <div class="card">外国人労働者の受け入れ拡大に反対</div>
-    <div class="card">技能実習制度の見直し</div>
-    <div class="card">難民制度の厳格化</div>
-    <div class="card">永住権取得の要件強化</div>
-    <div class="card">不法滞在者対策の強化</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('defense')">🛡 安全保障・外交 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="defense">
-    <div class="card">防衛費の増額に賛成</div>
-    <div class="card">自衛隊の装備強化</div>
-    <div class="card">日米同盟の強化</div>
-    <div class="card">核共有の議論を支持</div>
-    <div class="card">台湾有事への備え強化</div>
-    <div class="card">経済安全保障の強化</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('rights')">⚖ 社会制度・人権 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="rights">
-    <div class="card">同性婚に賛成</div>
-    <div class="card">夫婦別姓に賛成</div>
-    <div class="card">死刑制度の見直しに賛成</div>
-    <div class="card">表現の自由を重視</div>
-    <div class="card">人権教育の強化</div>
-    <div class="card">ジェンダー平等の推進</div>
-  </div>
-
-  <h3 onclick="toggleAccordion('local')">🏔 地方・農業・技術 <span style='font-size:0.8em; color:#666;'>(クリックで展開 / 折りたたみ)</span></h3>
-  <div class="card-container accordion-content" id="local">
-    <div class="card">地方交付税の見直し</div>
-    <div class="card">地域インフラの整備推進</div>
-    <div class="card">農業支援を拡充</div>
-    <div class="card">食料自給率向上</div>
-    <div class="card">技術革新の支援</div>
-    <div class="card">スタートアップ支援</div>
-  </div>
+  <label for="priority-topic">最も重視する政策テーマを選んでください（1つ）</label>
+  <select id="priority-topic">
+    <option value="">-- テーマを選んでください --</option>
+    <option value="防衛・安全保障">防衛・安全保障</option>
+    <option value="経済・税制">経済・税制</option>
+    <option value="教育・若者支援">教育・若者支援</option>
+    <option value="社会保障">社会保障</option>
+    <option value="移民・国籍">移民・国籍</option>
+    <option value="環境・エネルギー">環境・エネルギー</option>
+    <option value="人権・多様性">人権・多様性</option>
+    <option value="地域・農業">地域・農業</option>
+  </select>
 
   <label for="custom-tone">プロンプト構文を選択（任意）</label>
-<select id="custom-tone">
-  <option value="standard">通常構文（候補者の提示のみ）</option>
-  <option value="strong">要望強め（希望に極力沿うよう強調）</option>
-  <option value="ranked">ランク付け形式（一致度順で候補提示）</option>
-  <option value="explain">理由詳しく（候補者ごとの選定理由も記載）</option>
-</select>
+  <select id="custom-tone">
+    <option value="standard">通常構文（候補者の提示のみ）</option>
+    <option value="strong">要望強め（希望に極力沿うよう強調）</option>
+    <option value="ranked">ランク付け形式（一致度順で候補提示）</option>
+    <option value="explain">理由詳しく（候補者ごとの選定理由も記載）</option>
+  </select>
 
-<label for="stance-free">その他に重視したい点（自由記述・任意）</label>
+  <label for="stance-free">その他に重視したい点（自由記述・任意）</label>
   <textarea id="stance-free" placeholder="例：農政に力を入れてほしい、日米安保の見直し、表現の自由など"></textarea>
 
   <button onclick="generatePrompt()">🛠️ プロンプトを生成する</button>
@@ -257,12 +150,6 @@
   </div>
 
   <script>
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        card.classList.toggle('selected');
-      });
-    });
-
     function copyPrompt(button) {
       const text = document.getElementById("prompt-text").value;
       navigator.clipboard.writeText(text).then(() => {
@@ -276,47 +163,40 @@
         alert("コピーに失敗しました。手動で選択してください。");
       });
     }
-  </script>
 
-<script>
-  function generatePrompt() {
-    const region = document.getElementById('region').value;
-    const tone = document.getElementById('custom-tone').value;
-    const stanceCards = Array.from(document.querySelectorAll('.accordion-content .selected')).map(el => el.textContent);
-    const stanceFree = document.getElementById('stance-free').value.trim();
+    function generatePrompt() {
+      const region = document.getElementById('region').value;
+      const tone = document.getElementById('custom-tone').value;
+      const priority = document.getElementById('priority-topic').value;
+      const stanceFree = document.getElementById('stance-free').value.trim();
 
-    let prompt = "";
-    if (tone === "strong") {
-      prompt += `あなたは政治アドバイザーです。以下の希望に極力沿う候補者を${region}選挙区および比例代表から厳選してください。\n`;
-    } else if (tone === "ranked") {
-      prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から候補順にランク付けして提示してください。\n`;
-    } else if (tone === "explain") {
-      prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から探し、候補者ごとに理由を詳しく説明してください。\n`;
-    } else {
-      prompt += `以下の条件に基づき、${region}選挙区および比例代表から候補者を提案してください。\n`;
-    }
+      let prompt = "";
+      if (tone === "strong") {
+        prompt += `あなたは政治アドバイザーです。以下の希望に極力沿う候補者を${region}選挙区および比例代表から厳選してください。\n`;
+      } else if (tone === "ranked") {
+        prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から候補順にランク付けして提示してください。\n`;
+      } else if (tone === "explain") {
+        prompt += `以下の条件に合致する候補者を、${region}選挙区および比例代表から探し、候補者ごとに理由を詳しく説明してください。\n`;
+      } else {
+        prompt += `以下の条件に基づき、${region}選挙区および比例代表から候補者を提案してください。\n`;
+      }
 
-    if (stanceCards.length > 0) {
-      prompt += `重視する政策スタンス（以下すべてを重視しています）：\n- ${stanceCards.join('\n- ')}\n`;
-    }
-    if (stanceFree) {
-      prompt += `重視する政策スタンス（自由記述）：${stanceFree}。\n`;
-    }
-    prompt += `以下の情報を含めて提示してください：\n- 候補者の氏名\n- 所属政党\n- 上記のスタンスとの一致度\n- 判断の根拠や実績（可能であれば）\n- 推奨理由（簡潔に）`;
+      if (priority) {
+        prompt += `最も重視する政策テーマ：${priority}\n`;
+      }
 
-    document.getElementById('prompt-text').value = prompt;
-  }
-</script>
+      if (stanceFree) {
+        prompt += `その他に重視する点：${stanceFree}\n`;
+      }
 
-  <script>
-    function toggleAccordion(id) {
-      const section = document.getElementById(id);
-      section.classList.toggle("active");
+      prompt += `以下の情報を含めて提示してください：\n- 候補者の氏名\n- 所属政党\n- 上記のスタンスとの一致度\n- 判断の根拠や実績（可能であれば）\n- 推奨理由（簡潔に）`;
+
+      document.getElementById('prompt-text').value = prompt;
     }
   </script>
 
-<p style="font-size:0.9em; color:#666; margin-top:2em;">
-  このツールは選挙運動を目的としたものではありません。入力された内容に基づき、AIによる中立的な提案を生成する参考用ツールです。最終的な判断はご自身で行ってください。
-</p>
+  <p style="font-size:0.9em; color:#666; margin-top:2em;">
+    このツールは選挙運動を目的としたものではありません。入力された内容に基づき、AIによる中立的な提案を生成する参考用ツールです。最終的な判断はご自身で行ってください。
+  </p>
 </body>
 </html>
